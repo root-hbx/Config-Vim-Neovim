@@ -1,101 +1,105 @@
-let mapleader=" "
-syntax on
-set number
-set norelativenumber
-set cursorline
-set wrap
-set showcmd
-set wildmenu
+"Clearly this is my configuration of Vim, and it's suitable for mac!
 
-set hlsearch
-exec "nohlsearch"
-set incsearch
-set ignorecase
-set smartcase
-
-
+" 0. 显示设置（优化）
 set nocompatible
 filetype on
 filetype indent on
 filetype plugin on
 filetype plugin indent on
-set mouse=a
+"let g:ycm_python_binary_path = '/opt/homebrew/bin/python3'
+set mouse=a                                 "可使用鼠标控制
 set encoding=utf-8
 let &t_ut=''
-set expandtab
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
-set list
-set listchars=tab:▸\ ,trail:▫
+set expandtab                               "缩进相关
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+"set list
+"set listchars=tab:...?
 set scrolloff=5
 set tw=0
 set indentexpr=
-set backspace=indent,eol,start
+set backspace=indent,eol,start              "row(k+1)行首 回退至 row(k)行末
 set foldmethod=indent
 set foldlevel=99
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-set laststatus=2
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"    "三种模式下光标显示不一样
+set laststatus=2                            "最下面的状态栏宽度是2
 set autochdir
-au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" |endif
 
-noremap = nzz
-noremap - Nzz
-noremap <LEADER><CR> :nohlsearch<CR>
 
-noremap n h
-noremap u k
-noremap e j
-noremap i l
-noremap U 5k
-noremap E 5j
-noremap N 7h
-noremap I 7l
-" N key: go to the start of the line
-noremap <C-n> 0
-" I key: go to the end of the line
-noremap <C-i> $
+let mapleader = " "             "将键盘<LEADER>主动设置为空格键<SPACE>
+syntax on                       "语法高亮
+set number                      "设置行号
+set norelativenumber            "设置相对行号（off）
+set cursorline                  "行所在下线
+set wrap
+set showcmd
+set wildmenu                    "命令关键字自索引
+set nohlsearch                  "搜索高亮
+exec "nohlsearch"
+set incsearch                   "搜索过程直接高亮
+set ignorecase                  "大小写忽略(searching)
+set smartcase                   "大小写自动识别(searching)
 
-noremap k i
-noremap K I
-noremap l u
 
+" 1. 将hjkl重定向给四个方向键
+noremap <Up> k
+noremap <Down> j
+noremap <Left> h
+noremap <Right> l
+
+
+" 2. 常见键位映射更改
+" 1) shift + s <=> (S) => 实现保存 <=> :w<CR> (<CR>是回车键)
+" 2) s 原：删除所在字符并自开启insert模式 => none
+" 3) shift + q <=> (Q) => 实现退出 <=> :q<CR>
+" 4) shift + r <=> (R) => 刷新.vimrc_File <=> :source $MYVIMRC<CR>
+" map S :w<CR>
 map s <nop>
-map S :w<CR>
-map Q :q<CR>
+map Q :wq<CR>
 map R :source $MYVIMRC<CR>
-map ; :
 
-map si :set splitright<CR>:vsplit<CR>
-map sn :set nosplitright<CR>:vsplit<CR>
-map su :set nosplitbelow<CR>:split<CR>
-map se :set splitbelow<CR>:split<CR>
+" 3. search jumping
+noremap = nzz                         "= refers to 跳到下一个搜索目标
+noremap - Nzz                         "- refers to 返回上一个搜索目标
+noremap <LEADER><CR> :nohlsearch<CR>  "<SPACE>+<return> refers to 撤销搜索印记
 
-map <LEADER>i <C-w>l
-map <LEADER>u <C-w>k
-map <LEADER>n <C-w>h
-map <LEADER>e <C-w>j
 
-map <up> :res +5<CR>
-map <down> :res -5<CR>
-map <left> :vertical resize-5<CR>
-map <right> :vertical resize+5<CR>
-
-map tu :tabe<CR>
-map tn :-tabnext<CR>
-map ti :+tabnext<CR>
-
+" 4. 实现高级分屏和跳转
+" 高级分屏
+map s<Right> :set splitright<CR>:vsplit<CR>
+map s<Left> :set nosplitright<CR>:vsplit<CR>
+map s<Up> :set nosplitbelow<CR>:split<CR>
+map s<Down> :set splitbelow<CR>:split<CR>
+" 鼠标跳转
+map q<Right> <C-w>l
+map q<Left>  <C-w>h
+map q<Up>    <C-w>k
+map q<Down>  <C-w>j
+" 设置当前分屏大小
+map w<Right> :vertical resize-5<CR>
+map w<Left>  :vertical resize+5<CR>
+map w<Up> :res -5<CR>
+map w<Down> :res +5<CR>
+" 分屏在“上下”&“左右”之间切换
 map sv <C-w>t<C-w>H
 map sh <C-w>t<C-w>K
 
+
+"5. 设置打开一个新的标签页
+map tu :tabe<CR>
+map ty :-tabnext<CR>
+map ti :+tabnext<CR>
+
+
+" end: set plugins
 call plug#begin('~/.vim/plugged')
 
 Plug 'vim-airline/vim-airline'
 Plug 'connorholyday/vim-snazzy'
-
-
 
 " File navigation
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
@@ -155,16 +159,18 @@ Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'kana/vim-textobj-user'
 Plug 'fadein/vim-FIGlet'
 
-
 call plug#end()
 
-let g:SnazzyTransparent = 1
+
+
+" end+: colorBar
 color snazzy
+let g:SnazzyTransparent = 1
 
 " ===
 " === NERDTree
 " ===
-map tt :NERDTreeToggle<CR>
+map ff :NERDTreeToggle<CR>
 let NERDTreeMapOpenExpl = ""
 let NERDTreeMapUpdir = ""
 let NERDTreeMapUpdirKeepOpen = "l"
@@ -203,8 +209,8 @@ nnoremap gr :YcmCompleter GoToReferences<CR>
 let g:ycm_autoclose_preview_window_after_completion=0
 let g:ycm_autoclose_preview_window_after_insertion=1
 let g:ycm_use_clangd = 0
-let g:ycm_python_interpreter_path = "/bin/python3"
-let g:ycm_python_binary_path = "/bin/python3"
+let g:ycm_python_interpreter_path = "/opt/homebrew/bin/python3"
+let g:ycm_python_binary_path = "/opt/homebrew/bin/python3"
 
 
 " ===
@@ -271,18 +277,12 @@ autocmd WinEnter * silent! unmap <LEADER>ig
 
 
 " ===
-" === Goyo
-" ===
-map <LEADER>gy :Goyo<CR>
-
-
-" ===
 " === vim-signiture
 " ===
 let g:SignatureMap = {
         \ 'Leader'             :  "m",
         \ 'PlaceNextMark'      :  "m,",
-        \ 'ToggleMarkAtLine'   :  "m.",
+        \ 'ToggleMarkAtline'   :  "m.",
         \ 'PurgeMarksAtLine'   :  "dm-",
         \ 'DeleteMark'         :  "dm",
         \ 'PurgeMarks'         :  "dm/",
@@ -309,5 +309,4 @@ let g:SignatureMap = {
 " ===
 let g:undotree_DiffAutoOpen = 0
 map L :UndotreeToggle<CR>
-
-
+ huluobo@huluobodeMacBook-Pro  ~   main ± 
