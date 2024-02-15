@@ -734,7 +734,67 @@ map L :UndotreeToggle<CR>
 
 huluobo@huluobodeMacBook-Pro  ~   main ± 
 ```
+
 #### 配置效果：
+```vim
+1. 取消s的原有属性
+map s <nop>
+
+2. shift+q直接等价于:wq
+map Q :wq<CR>
+
+3. shift+r直接等价于"刷新"
+map R :source $MYVIMRC<CR>
+```
+
+```vim
+4. =  跳到下一个搜索目标
+noremap = nzz                
+
+5. - 返回上一个搜索目标
+noremap - Nzz                         
+```
+
+```vim
+6. 高级分屏：s+方向键
+map s<Right> :set splitright<CR>:vsplit<CR>
+map s<Left> :set nosplitright<CR>:vsplit<CR>
+map s<Up> :set nosplitbelow<CR>:split<CR>
+map s<Down> :set splitbelow<CR>:split<CR>
+
+7. 鼠标跳转：q+方向键
+map q<Right> <C-w>l
+map q<Left>  <C-w>h
+map q<Up>    <C-w>k
+map q<Down>  <C-w>j
+
+8. 设置当前分屏大小：w+方向键
+map w<Right> :vertical resize-5<CR>
+map w<Left>  :vertical resize+5<CR>
+map w<Up> :res -5<CR>
+map w<Down> :res +5<CR>
+
+9. 分屏在“上下”&“左右”之间切换：sv和sh
+map sv <C-w>t<C-w>H
+map sh <C-w>t<C-w>K
+```
+
+```vim
+" ===
+" === NERDTree：ff打开文件栏
+" ===
+map ff :NERDTreeToggle<CR>
+let NERDTreeMapOpenExpl = ""
+let NERDTreeMapUpdir = ""
+let NERDTreeMapUpdirKeepOpen = "l"
+let NERDTreeMapOpenSplit = ""
+let NERDTreeOpenVSplit = ""
+let NERDTreeMapActivateNode = "i"
+let NERDTreeMapOpenInTab = "o"
+let NERDTreeMapPreview = ""
+let NERDTreeMapCloseDir = "n"
+let NERDTreeMapChangeRoot = "y"
+
 
 
 #### Tips:
