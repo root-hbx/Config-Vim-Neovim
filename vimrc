@@ -1,4 +1,5 @@
-"Clearly this is my configuration of Vim, and it's suitable for mac!
+" Clearly this is my configuration of Vim, and it's suitable for mac!
+" There are some confs with the path of plugins and you have to switch them to your own paths.
 
 " 0. 显示设置（优化）
 set nocompatible
