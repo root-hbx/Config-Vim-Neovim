@@ -310,4 +310,4 @@ let g:SignatureMap = {
 " ===
 let g:undotree_DiffAutoOpen = 0
 map L :UndotreeToggle<CR>
- huluobo@huluobodeMacBook-Pro  ~   main ± 
+
