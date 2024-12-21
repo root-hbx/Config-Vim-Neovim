@@ -96,9 +96,13 @@ map ty :-tabnext<CR>
 map ti :+tabnext<CR>
 
 
-"6. 复制全文
+"6. 常用快捷键映射
 " map into <leader" "> + a
 nnoremap <leader>a ggVG"+y
+noremap _ 0
+noremap + $
+noremap y "+y
+
 
 " end: set plugins
 call plug#begin('~/.vim/plugged')
@@ -361,4 +365,8 @@ let g:NERDCommentEmptyLines = 1
 let g:NERDTrimTrailingWhitespace = 1
 " Enable NERDCommenterToggle to check all selected lines is commented or not
 let g:NERDToggleCheckAllLines = 1
+
+map ? <plug>NERDCommenterComment
+map ? <plug>NERDCommenterToggle
+
 
