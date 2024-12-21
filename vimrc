@@ -1,14 +1,14 @@
-" Clearly this is my configuration of Vim, and it's suitable for mac!
-" There are some confs with the path of plugins and you have to switch them to your own paths.
+"Clearly this is my configuration of Vim, and it's suitable for mac!
 
 " 0. 显示设置（优化）
-set nocompatible
+set nocompatible          
 filetype on
 filetype indent on
 filetype plugin on
 filetype plugin indent on
 "let g:ycm_python_binary_path = '/opt/homebrew/bin/python3'
 set mouse=a                                 "可使用鼠标控制
+set clipboard=unnamedplus "允许直接复制进系统剪切板
 set encoding=utf-8
 let &t_ut=''
 set expandtab                               "缩进相关
@@ -33,14 +33,14 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 
 let mapleader = " "             "将键盘<LEADER>主动设置为空格键<SPACE>
 syntax on                       "语法高亮
-set number                      "设置行号
+set number                      "设置行号 
 set norelativenumber            "设置相对行号（off）
 set cursorline                  "行所在下线
-set wrap
+set wrap                        
 set showcmd
 set wildmenu                    "命令关键字自索引
 set nohlsearch                  "搜索高亮
-exec "nohlsearch"
+exec "nohlsearch"               
 set incsearch                   "搜索过程直接高亮
 set ignorecase                  "大小写忽略(searching)
 set smartcase                   "大小写自动识别(searching)
@@ -71,10 +71,10 @@ noremap <LEADER><CR> :nohlsearch<CR>  "<SPACE>+<return> refers to 撤销搜索�
 
 " 4. 实现高级分屏和跳转
 " 高级分屏
-map s<Right> :set splitright<CR>:vsplit<CR>
-map s<Left> :set nosplitright<CR>:vsplit<CR>
-map s<Up> :set nosplitbelow<CR>:split<CR>
-map s<Down> :set splitbelow<CR>:split<CR>
+map s<Right> :set splitright<CR>:vsplit<CR>     
+map s<Left> :set nosplitright<CR>:vsplit<CR>  
+map s<Up> :set nosplitbelow<CR>:split<CR>    
+map s<Down> :set splitbelow<CR>:split<CR>    
 " 鼠标跳转
 map q<Right> <C-w>l
 map q<Left>  <C-w>h
@@ -96,6 +96,10 @@ map ty :-tabnext<CR>
 map ti :+tabnext<CR>
 
 
+"6. 复制全文
+" map into <leader" "> + a
+nnoremap <leader>a ggVG"+y
+
 " end: set plugins
 call plug#begin('~/.vim/plugged')
 
@@ -112,7 +116,7 @@ Plug 'majutsushi/tagbar', { 'on': 'TagbarOpenAutoClose' }
 " Error checking
 Plug 'w0rp/ale'
 
-" Auto Complete
+" Auto-Complement 
 Plug 'Valloric/YouCompleteMe'
 
 " Undo Tree
@@ -146,6 +150,16 @@ Plug 'vimwiki/vimwiki'
 
 " Bookmarks
 Plug 'kshenoy/vim-signature'
+
+" Completement (auto-pairs)
+Plug 'jiangmiao/auto-pairs'
+
+" Status Bar (vim-airline)
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" Comment (NerdCommenter)
+Plug 'preservim/nerdcommenter'
 
 " Other useful utilities
 Plug 'terryma/vim-multiple-cursors'
@@ -283,7 +297,7 @@ autocmd WinEnter * silent! unmap <LEADER>ig
 let g:SignatureMap = {
         \ 'Leader'             :  "m",
         \ 'PlaceNextMark'      :  "m,",
-        \ 'ToggleMarkAtline'   :  "m.",
+        \ 'ToggleMarkAtline'   :  "m.",       
         \ 'PurgeMarksAtLine'   :  "dm-",
         \ 'DeleteMark'         :  "dm",
         \ 'PurgeMarks'         :  "dm/",
@@ -310,4 +324,41 @@ let g:SignatureMap = {
 " ===
 let g:undotree_DiffAutoOpen = 0
 map L :UndotreeToggle<CR>
+
+" ===
+" === auto-pairs
+" ===
+
+au Filetype FILETYPE let b:AutoPairs = {"(": ")"}
+au FileType php      let b:AutoPairs = AutoPairsDefine({'<?' : '?>', '<?php': '?>'})
+
+
+" ===
+" === vim-airline
+" ===
+
+set laststatus=2  "永远显示状态栏
+let g:airline_powerline_fonts = 1  " 支持 powerline 字体
+" let g:airline#extensions#tabline#enabled = 1 " 显示窗口tab和buffer
+
+" ===
+" === NerdCommenter
+" ===
+
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_java = 1
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/',} }
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+" Enable NERDCommenterToggle to check all selected lines is commented or not
+let g:NERDToggleCheckAllLines = 1
 
