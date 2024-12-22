@@ -32,6 +32,7 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 
 
 let mapleader = " "             "将键盘<LEADER>主动设置为空格键<SPACE>
+let g:tagbar_ctags_bin = "/opt/homebrew/bin/ctags" "install Ctags
 syntax on                       "语法高亮
 set number                      "设置行号 
 set norelativenumber            "设置相对行号（off）
@@ -245,6 +246,7 @@ let b:ale_fixers = ['autopep8', 'yapf']
 map <silent> T :TagbarOpenAutoClose<CR>
 
 
+
 " ===
 " === MarkdownPreview
 " ===
@@ -368,5 +370,37 @@ let g:NERDToggleCheckAllLines = 1
 
 map ? <plug>NERDCommenterComment
 map ? <plug>NERDCommenterToggle
+
+" ===
+" === GoTags
+" ===
+
+let g:tagbar_type_go = {
+	\ 'ctagstype' : 'go',
+	\ 'kinds'     : [
+		\ 'p:package',
+		\ 'i:imports:1',
+		\ 'c:constants',
+		\ 'v:variables',
+		\ 't:types',
+		\ 'n:interfaces',
+		\ 'w:fields',
+		\ 'e:embedded',
+		\ 'm:methods',
+		\ 'r:constructor',
+		\ 'f:functions'
+	\ ],
+	\ 'sro' : '.',
+	\ 'kind2scope' : {
+		\ 't' : 'ctype',
+		\ 'n' : 'ntype'
+	\ },
+	\ 'scope2kind' : {
+		\ 'ctype' : 't',
+		\ 'ntype' : 'n'
+	\ },
+	\ 'ctagsbin'  : 'gotags',
+	\ 'ctagsargs' : '-sort -silent'
+\ }
 
 
